@@ -1,4 +1,4 @@
-const svg = document.getElementById("cube");
+const svg = document.getElementById("pyra");
 
 const SQRT3 = Math.sqrt(3);
 
