@@ -67,7 +67,8 @@ const colorMap = {
   G: "#00cc00",
   R: "#ff0000",
   B: "#0000ff",
-  Y: "#ffff00"
+  Y: "#ffff00",
+  X: "#545454"
 };
 
 // 仮 state（3面）
