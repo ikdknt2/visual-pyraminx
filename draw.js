@@ -84,10 +84,24 @@ function ptsToString(pts){
   return pts.map(p => `${p[0]+150},${150-p[1]}`).join(" ");
 }
 
+// ===== ズレ補正 =====
+function shrink(pts, strokeWidth){
+  const cx = (pts[0][0]+pts[1][0]+pts[2][0])/3;
+  const cy = (pts[0][1]+pts[1][1]+pts[2][1])/3;
+
+  const factor = 1 - strokeWidth * 0.01;
+
+  return pts.map(p => [
+    cx + (p[0]-cx)*factor,
+    cy + (p[1]-cy)*factor
+  ]);
+}
 
 // ===== 描画 =====
 function draw(){
   svg.innerHTML = "";
+
+  const strokeWidth = 0.6; // ←ここで調整
 
   triangles.forEach(t => {
     const poly = document.createElementNS(
@@ -95,10 +109,14 @@ function draw(){
       "polygon"
     );
 
-    poly.setAttribute("points", ptsToString(t.pts));
+    // 👇 ここで縮小をかける
+    const shrunk = shrink(t.pts, strokeWidth);
+
+    poly.setAttribute("points", ptsToString(shrunk));
     poly.setAttribute("fill", colorMap[state[t.idx]]);
-    poly.setAttribute("stroke", "#000");
-    poly.setAttribute("stroke-width", "1");
+    poly.setAttribute("stroke", "#222");
+    poly.setAttribute("stroke-width", strokeWidth);
+    poly.setAttribute("stroke-linejoin", "round");
 
     svg.appendChild(poly);
   });
