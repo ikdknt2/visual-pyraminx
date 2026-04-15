@@ -104,7 +104,7 @@ function shrink(pts, strokeWidth){
 function draw(){
   svg.innerHTML = "";
 
-  const strokeWidth = 2; // ←ここで調整
+  const strokeWidth = 1; // ←ここで調整
 
   triangles.forEach(t => {
     const poly = document.createElementNS(
@@ -120,7 +120,7 @@ function draw(){
     poly.setAttribute("stroke", "#222");
     poly.setAttribute("stroke-width", strokeWidth);
     poly.setAttribute("stroke-linejoin", "round");
-    poly.setAttribute("paint-order", "stroke fill");
+    poly.setAttribute("stroke-width", strokeWidth);
     svg.appendChild(poly);
   });
 }
