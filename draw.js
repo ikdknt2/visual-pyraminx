@@ -104,7 +104,7 @@ function shrink(pts, strokeWidth){
 function draw(){
   svg.innerHTML = "";
 
-  const strokeWidth = 0.5; // ←ここで調整
+  const strokeWidth = 2; // ←ここで調整
 
   triangles.forEach(t => {
     const poly = document.createElementNS(
