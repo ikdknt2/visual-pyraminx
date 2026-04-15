@@ -120,7 +120,6 @@ function draw(){
     poly.setAttribute("stroke", "#222");
     poly.setAttribute("stroke-width", strokeWidth);
     poly.setAttribute("stroke-linejoin", "round");
-    poly.setAttribute("stroke-width", strokeWidth);
     svg.appendChild(poly);
   });
 }
