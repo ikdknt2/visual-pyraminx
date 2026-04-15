@@ -81,12 +81,15 @@ const state = [
 
 // ===== 座標変換 =====
 function ptsToString(pts){
-  // 小数座標の描画ゆらぎを抑えるため、座標を軽く丸める
-  return pts
-    .map(p => `${(p[0]+150).toFixed(2)},${(150-p[1]).toFixed(2)}`)
-    .join(" ");
-}
+  const scale = 3;
+  const offset = 200;
 
+  return pts.map(p => {
+    const x = Math.round(p[0]*scale+offset);
+    const y = Math.round(offset-p[1]*scale);
+    return `${x},${y}`;
+  }).join(" ");
+}
 // ===== ズレ補正 =====
 function shrink(pts, strokeWidth){
   const cx = (pts[0][0]+pts[1][0]+pts[2][0])/3;
