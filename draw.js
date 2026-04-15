@@ -84,12 +84,9 @@ function ptsToString(pts){
   const scale = 3;
   const offset = 200;
 
-  return pts.map(p => {
-    const x = Math.round(p[0]*scale+offset);
-    const y = Math.round(offset-p[1]*scale);
-    return `${x},${y}`;
-  }).join(" ");
+  return pts.map(p => `${p[0]*scale+offset},${offset-p[1]*scale}`).join(" ");
 }
+
 // ===== ズレ補正 =====
 function shrink(pts, strokeWidth){
   const cx = (pts[0][0]+pts[1][0]+pts[2][0])/3;
