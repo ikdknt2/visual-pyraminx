@@ -81,7 +81,10 @@ const state = [
 
 // ===== 座標変換 =====
 function ptsToString(pts){
-  return pts.map(p => `${p[0]+150},${150-p[1]}`).join(" ");
+  // 小数座標の描画ゆらぎを抑えるため、座標を軽く丸める
+  return pts
+    .map(p => `${(p[0]+150).toFixed(2)},${(150-p[1]).toFixed(2)}`)
+    .join(" ");
 }
 
 // ===== ズレ補正 =====
@@ -117,7 +120,7 @@ function draw(){
     poly.setAttribute("stroke", "#222");
     poly.setAttribute("stroke-width", strokeWidth);
     poly.setAttribute("stroke-linejoin", "round");
-
+    poly.setAttribute("paint-order", "stroke fill");
     svg.appendChild(poly);
   });
 }
