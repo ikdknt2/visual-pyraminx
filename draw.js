@@ -124,4 +124,43 @@ function draw(){
   });
 }
 
+function downloadPNG(){
+  const svg = document.getElementById("pyra");
+
+  const serializer = new XMLSerializer();
+  const source = serializer.serializeToString(svg);
+
+  const img = new Image();
+  const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(svgBlob);
+
+  img.onload = function(){
+    const size = 2000; // ←ここで解像度（自由に変えてOK）
+
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+
+    const ctx = canvas.getContext("2d");
+
+    // 背景（白にしたいなら）
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, size, size);
+
+    ctx.drawImage(img, 0, 0, size, size);
+
+    const png = canvas.toDataURL("image/png");
+
+    const a = document.createElement("a");
+    a.href = png;
+    a.download = "pyraminx.png";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  };
+
+  img.src = url;
+}
+
+
 draw();
