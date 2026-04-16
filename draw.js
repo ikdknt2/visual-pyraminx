@@ -79,12 +79,24 @@ const state = [
 ];
 
 
+const SCALE = 5;
+const VIEWBOX_PADDING = 20;
+
+const allPoints = triangles.flatMap((t) => t.pts);
+const minX = Math.min(...allPoints.map((p) => p[0]));
+const maxX = Math.max(...allPoints.map((p) => p[0]));
+const minY = Math.min(...allPoints.map((p) => p[1]));
+const maxY = Math.max(...allPoints.map((p) => p[1]));
+
+function toSvgPoint([x, y]) {
+  const svgX = (x - minX) * SCALE + VIEWBOX_PADDING;
+  const svgY = (maxY - y) * SCALE + VIEWBOX_PADDING;
+  return `${svgX},${svgY}`;
+}
+
 // ===== 座標変換 =====
 function ptsToString(pts){
-  const scale = 5;
-  const offset = 200;
-
-  return pts.map(p => `${p[0]*scale+offset},${offset-p[1]*scale}`).join(" ");
+  return pts.map(toSvgPoint).join(" ");
 }
 
 // ===== ズレ補正 =====
@@ -103,6 +115,9 @@ function shrink(pts, strokeWidth){
 // ===== 描画 =====
 function draw(){
   svg.innerHTML = "";
+  const viewBoxWidth = (maxX - minX) * SCALE + VIEWBOX_PADDING * 2;
+  const viewBoxHeight = (maxY - minY) * SCALE + VIEWBOX_PADDING * 2;
+  svg.setAttribute("viewBox", `0 0 ${viewBoxWidth} ${viewBoxHeight}`);
 
   const strokeWidth = 3; // ←ここで調整
 
@@ -126,28 +141,35 @@ function draw(){
 
 function downloadPNG(){
   const svg = document.getElementById("pyra");
+  const viewBox = svg.viewBox.baseVal;
+  const exportWidth = viewBox && viewBox.width ? viewBox.width : svg.clientWidth;
+  const exportHeight = viewBox && viewBox.height ? viewBox.height : svg.clientHeight;
+  const exportScale = 4;
+
+  const exportSvg = svg.cloneNode(true);
+  exportSvg.setAttribute("width", exportWidth);
+  exportSvg.setAttribute("height", exportHeight);
+  exportSvg.setAttribute("viewBox", `0 0 ${exportWidth} ${exportHeight}`);
 
   const serializer = new XMLSerializer();
-  const source = serializer.serializeToString(svg);
+  const source = serializer.serializeToString(exportSvg);
 
   const img = new Image();
   const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
   const url = URL.createObjectURL(svgBlob);
 
   img.onload = function(){
-    const size = 2000; // ←ここで解像度（自由に変えてOK）
-
     const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
+    canvas.width = Math.round(exportWidth * exportScale);
+    canvas.height = Math.round(exportHeight * exportScale);
 
     const ctx = canvas.getContext("2d");
 
     // 背景（白にしたいなら）
     ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, size, size);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.drawImage(img, 0, 0, size, size);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     const png = canvas.toDataURL("image/png");
 
