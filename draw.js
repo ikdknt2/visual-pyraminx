@@ -81,36 +81,6 @@ const state = [
 const SCALE = 5;
 const VIEWBOX_PADDING = 20;
 
-const allPoints = triangles.flatMap((t) => t.pts);
-const minX = Math.min(...allPoints.map((p) => p[0]));
-const maxX = Math.max(...allPoints.map((p) => p[0]));
-const minY = Math.min(...allPoints.map((p) => p[1]));
-const maxY = Math.max(...allPoints.map((p) => p[1]));
-
-function toSvgPoint([x, y]) {
-  const svgX = (x - minX) * SCALE + VIEWBOX_PADDING;
-  const svgY = (maxY - y) * SCALE + VIEWBOX_PADDING;
-  return `${svgX},${svgY}`;
-}
-
-const SCALE = 5;
-const VIEWBOX_PADDING = 20;
-
-const allPoints = triangles.flatMap((t) => t.pts);
-const minX = Math.min(...allPoints.map((p) => p[0]));
-const maxX = Math.max(...allPoints.map((p) => p[0]));
-const minY = Math.min(...allPoints.map((p) => p[1]));
-const maxY = Math.max(...allPoints.map((p) => p[1]));
-
-function toSvgPoint([x, y]) {
-  const svgX = (x - minX) * SCALE + VIEWBOX_PADDING;
-  const svgY = (maxY - y) * SCALE + VIEWBOX_PADDING;
-  return `${svgX},${svgY}`;
-}
-
-const SCALE = 5;
-const VIEWBOX_PADDING = 20;
-
 const allPoints = triangles.reduce((points, t) => points.concat(t.pts), []);
 const minX = Math.min(...allPoints.map((p) => p[0]));
 const maxX = Math.max(...allPoints.map((p) => p[0]));
