@@ -81,7 +81,7 @@ const state = [
 
 // ===== 座標変換 =====
 function ptsToString(pts){
-  const scale = 3;
+  const scale = 5;
   const offset = 200;
 
   return pts.map(p => `${p[0]*scale+offset},${offset-p[1]*scale}`).join(" ");
