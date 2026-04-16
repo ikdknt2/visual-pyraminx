@@ -95,10 +95,7 @@ function toSvgPoint([x, y]) {
 
 // ===== 座標変換 =====
 function ptsToString(pts){
-  const scale = 5;
-  const offset = 200;
-
-  return pts.map(p => `${p[0]*scale+offset},${offset-p[1]*scale}`).join(" ");
+  return pts.map(toSvgPoint).join(" ");
 }
 
 // ===== ズレ補正 =====
