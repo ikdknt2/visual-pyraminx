@@ -78,7 +78,7 @@ const state = [
   ..."BBBBBBBBB"
 ];
 
-const SCALE = 5;
+let SCALE = 5;
 const VIEWBOX_PADDING = 20;
 
 const allPoints = triangles.reduce((points, t) => points.concat(t.pts), []);
