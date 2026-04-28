@@ -80,7 +80,7 @@ const state = [
 
 let SCALE = 5;
 const VIEWBOX_PADDING = 20;
-
+let strokeWidth = 3;
 const allPoints = triangles.reduce((points, t) => points.concat(t.pts), []);
 const minX = Math.min(...allPoints.map((p) => p[0]));
 const maxX = Math.max(...allPoints.map((p) => p[0]));
@@ -118,7 +118,7 @@ function draw(){
   const viewBoxHeight = (maxY - minY) * SCALE + VIEWBOX_PADDING * 2;
   svg.setAttribute("viewBox", `0 0 ${viewBoxWidth} ${viewBoxHeight}`);
 
-  let strokeWidth = 3; // ←ここで調整
+  strokeWidth = 3; // ←ここで調整
 
   triangles.forEach(t => {
     const poly = document.createElementNS(
