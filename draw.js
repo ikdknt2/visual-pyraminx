@@ -118,7 +118,7 @@ function draw(){
   const viewBoxHeight = (maxY - minY) * SCALE + VIEWBOX_PADDING * 2;
   svg.setAttribute("viewBox", `0 0 ${viewBoxWidth} ${viewBoxHeight}`);
 
-  const strokeWidth = 3; // ←ここで調整
+  let strokeWidth = 3; // ←ここで調整
 
   triangles.forEach(t => {
     const poly = document.createElementNS(
