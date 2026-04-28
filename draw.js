@@ -130,7 +130,7 @@ function draw(){
 
     poly.setAttribute("points", ptsToString(shrunk));
     poly.setAttribute("fill", colorMap[state[t.idx]]);
-    poly.setAttribute("stroke", "#222");
+    poly.setAttribute("stroke", "#000000");
     poly.setAttribute("stroke-width", strokeWidth);
     poly.setAttribute("stroke-linejoin", "round");
     svg.appendChild(poly);
